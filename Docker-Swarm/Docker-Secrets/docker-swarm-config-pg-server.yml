@@ -1,0 +1,31 @@
+version: '3'
+services:
+  web:
+    image: pbadhe34/py-pg:pg-sql
+    ports:
+       - "7500:8090"     
+    networks:
+       - webnet  
+  dbserver:
+    image: postgres  
+    environment:
+      ENV POSTGRES_DB: pg
+      ENV POSTGRES_USER: raghav      
+      ENV POSTGRES_PASSWORD: secK#et   
+    volumes:
+       - /pg-volume/data:/var/lib/postgresql/data
+    networks:
+       - webnet
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+    networks:
+       - webnet
+networks:
+  webnet:
+
+  

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  web:
+    image: pbadhe34/py-pg:pg-sql
+    ports:
+       - "8090:8090"
+    links:
+      - "app:dbserver"
+    networks:
+       - webnet  
+  app:
+    image: pbadhe34/py-pg:pg-db        
+    volumes:
+       - /pg-volume/data:/var/lib/postgresql/data
+    networks:
+       - webnet
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+networks:
+  webnet:
+
+  

@@ -1,0 +1,12 @@
+version: "3"
+services:
+  database-service:
+    image: mongo
+    container_name: "api-database" 
+    volumes:
+       - /mongo-data:/data/db
+     
+  api:
+    image: api-docker-app      
+    links:
+      - database-service
